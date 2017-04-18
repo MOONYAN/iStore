@@ -7,6 +7,7 @@ var dbConfig = require('./config/dbConfig'),
     autoIncrement = require('mongoose-auto-increment'),
     cors = require('cors');
 
+mongoose.Promise = global.Promise;
 autoIncrement.initialize(connection);
 
 var userRouter = require('./routers/userRouter'),
