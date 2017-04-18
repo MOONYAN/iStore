@@ -62,7 +62,7 @@ router.put('/', function(req, res) {
             if (err)
                 return res.json({ error: '交易紀錄錯誤' });
             else
-                return res.json(account);
+                return res.json({account:account});
         });
     }])
 });
@@ -98,7 +98,7 @@ router.get('/', function(req, res) {
         if (err)
             return res.json({ error: '帳戶列表錯誤' });
         else
-            return res.json(accounts);
+            return res.json({accounts:accounts});
     })
 });
 
