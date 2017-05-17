@@ -1,4 +1,4 @@
-var { storeId } = require('./config/storeConfig');
+var { storeId } = require('./config/storeConfig').store;
 
 module.exports = {
   apps : [
