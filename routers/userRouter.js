@@ -1,4 +1,4 @@
-var { storeSecret } = require('../config/storeConfig').store,
+var { storeId, storeSecret } = require('../config/storeConfig').store,
     express = require('express'),
     router = express.Router(),
     async = require('async'),
@@ -6,9 +6,8 @@ var { storeSecret } = require('../config/storeConfig').store,
     Account = require('../models/accountModel');
 
 var passport = require('passport'),
-    jwt = require('jsonwebtoken');
+    jwt = require('jsonwebtoken'),
     user = require('../helpers/accessControl');
-
 
 router.post('/', function (req, res) {
     var user = new User({
@@ -37,11 +36,16 @@ router.post('/login', function (req, res) {
                 else if (errInfo.name === 'IncorrectUsernameError')
                     return res.json({ error: '帳號不存在' });
             } else {
-                user.update({ $set: { deviceToken: req.body.deviceToken } }, function (err) {
+                user.update({ $set: { deviceToken: req.body.deviceToken ? req.body.deviceToken : user.deviceToken, lineId: req.body.lineId ? req.body.lineId : user.lineId } }, function (err) {
                     if (err)
-                        res.json({ error: '裝置註冊錯誤' });
-                    else
-                        next(null, user);
+                        return res.json({ error: '裝置註冊錯誤' });
+                    else {
+                        if (req.body.lineId)
+                            return res.json({});
+                        else
+                            next(null, user);
+                    }
+
                 });
             }
         })(req, res);
@@ -57,5 +61,7 @@ router.post('/login', function (req, res) {
         });
     }]);
 });
+
+//console.log(jwt.sign({ role: 'line' }, storeSecret, { expiresIn: '60D' }));
 
 module.exports = router;
