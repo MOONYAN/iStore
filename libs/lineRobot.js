@@ -35,7 +35,7 @@ lineBot.on('message', function (event) {
     var lineMessages = new Messages();
 
     if (text.substr(0, 2) === '儲值') {
-        var amount = text.substring(2, text.length - 1);
+        var amount = text.substring(2);
         axios({
             method: 'put',
             url: lineDepositUrl,
