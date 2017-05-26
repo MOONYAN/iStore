@@ -11,7 +11,7 @@ var lineBot = new LineBot({
         port: `31${storeId}`,
         tunnel: false,
         verifySignature: true,
-        endpoint: `/apps${storeId}/line/webhook`
+        endpoint: `/`
     }
 })
 
