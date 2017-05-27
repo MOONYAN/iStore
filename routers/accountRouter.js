@@ -116,8 +116,6 @@ router.put('/deposit', user.can('deposit'), function (req, res) {
             if (err) {
                 return res.json({ error: '交易錯誤' });
             } else {
-                var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                res.header('Authorization', `Bearer ${roleToken}`);
                 return res.json({ account: account });
             }
         });
@@ -169,8 +167,6 @@ router.put('/buy', user.can('buy'), function (req, res) {
             if (err) {
                 return res.json({ error: '交易錯誤' });
             } else {
-                var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                res.header('Authorization', `Bearer ${roleToken}`);
                 return res.json({ account: account });
             }
         });
@@ -212,8 +208,6 @@ router.get('/', user.can('accounts'), function (req, res) {
         if (err)
             return res.json({ error: '帳戶列表錯誤' });
         else {
-            var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-            res.header('Authorization', `Bearer ${roleToken}`);
             return res.json({ accounts: accounts });
         }
     })
@@ -226,8 +220,6 @@ router.get('/transaction/:accountId', user.can('transactions'), function (req, r
             if (err)
                 res.json({ error: '交易明細錯誤' });
             else {
-                var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                res.header('Authorization', `Bearer ${roleToken}`);
                 res.json({ transactions: account.transactions });
             }
         });
@@ -240,8 +232,6 @@ router.get('/message/:accountId', user.can('messages'), function (req, res) {
             if (err)
                 res.json({ error: '訊息明細錯誤' });
             else {
-                var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                res.header('Authorization', `Bearer ${roleToken}`);
                 res.json({ messages: account.messages });
             }
         });
