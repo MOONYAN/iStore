@@ -278,8 +278,6 @@ router.post('/message', user.can('sendMessage'), function (req, res) {
             if (err)
                 return res.json({ error: '訊息儲存錯誤' });
             else {
-                var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                res.header('Authorization', `Bearer ${roleToken}`);
                 return res.json({});
             }
         });
