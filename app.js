@@ -12,8 +12,7 @@ var mongoose = require('mongoose'),
 mongoose.Promise = global.Promise;
 autoIncrement.initialize(connection);
 
-var User = require('./models/userModel'),
-    expressJwt = require('express-jwt'),
+var expressJwt = require('express-jwt'),
     user = require('./helpers/accessControl');
 
 var userRouter = require('./routers/userRouter'),
@@ -43,7 +42,7 @@ app.all('*', expressJwt({ secret: storeSecret })
         next();
     });
 
-app.post('account/login|account', expressJwt(secret: istoreSecret), function (req, res, next) {
+app.post(`${storePath}/account|${storePath}/account/login`, expressJwt({secret: istoreSecret}), function (req, res, next) {
     next();
 });
 

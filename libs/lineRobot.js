@@ -7,8 +7,7 @@ var lineBot = require('../helpers/lineBot');
 var async = require('async'),
     axios = require('axios');
 
-var User = require('../models/userModel'),
-    Account = require('../models/accountModel'),
+var Account = require('../models/accountModel'),
     Transaction = require('../models/transactionModel');
 
 var Messages = LineBot.Messages;

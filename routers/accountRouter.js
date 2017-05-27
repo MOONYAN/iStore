@@ -3,17 +3,15 @@ var { storeId, storeSecret, storeTopic } = require('../config/storeConfig').stor
     express = require('express'),
     router = express.Router(),
     async = require('async'),
-    User = require('../models/userModel'),
     Account = require('../models/accountModel'),
     Message = require('../models/messageModel'),
     Transaction = require('../models/transactionModel'),
     Product = require('../models/productModel');
 
-var passport = require('passport'),
-    jwt = require('jsonwebtoken'),
+var jwt = require('jsonwebtoken'),
     user = require('../helpers/accessControl');
 
-router.post('/login', function (req, res) {
+router.post('/login', user.can('loginAccount'), function (req, res) {
     async.waterfall([function (next) {
         Account.findById(req.body.accountId, function (err, account) {
             if (err)
@@ -24,12 +22,10 @@ router.post('/login', function (req, res) {
     }, function (account, next) {
         account.lineId = req.body.lineId || account.lineId;
         account.save(function (err) {
-            if(err)
-            {
+            if(err) {
                 return res.json({ error: 'line註冊錯誤' });
             }
-            else
-            {
+            else {
                 var roleToken = jwt.sign({ role: account.role || 'customer' }, storeSecret, { expiresIn: '30m' });
                 res.header('Authorization', `Bearer ${roleToken}`);
                 return res.json({ account: account });

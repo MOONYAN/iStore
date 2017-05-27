@@ -1,8 +1,8 @@
-angular.module('2017Web').service('UserService', ['$rootScope', '$http', function ($rootScope, $http) {
+angular.module('2017Web').service('AccountService', ['$rootScope', '$http', function ($rootScope, $http) {
     var self = this;
 
-    self.register = function (user, onSuccess){
-        $http.post($rootScope.istoreUrl + '/user', user).
+    self.register = function (account, onSuccess){
+        $http.post($rootScope.url + '/account', account).
             success(function (data, status, headers, config) {
                 (onSuccess || angular.noop)(data);
             }).error(function (data, status, headers, config) {
@@ -10,8 +10,8 @@ angular.module('2017Web').service('UserService', ['$rootScope', '$http', functio
             });
     }
 
-    self.login = function (user, onSuccess) {
-        $http.post($rootScope.istoreUrl + '/user/login', user).
+    self.login = function (account, onSuccess) {
+        $http.post($rootScope.url + '/account/login', account).
             success(function (data, status, headers, config) {
                 (onSuccess || angular.noop)(data);
             }).error(function (data, status, headers, config) {
