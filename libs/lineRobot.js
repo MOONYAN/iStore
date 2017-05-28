@@ -28,7 +28,7 @@ lineBot.on('follow', function (event) {
     lineBot.replyMessage(replyToken, lineMessages.commit());
 });
 
-lineBot.onText(/^加值(\d+)元$/, function (event, [, amount]) {
+lineBot.onText(/^儲值(\d+)元$/, function (event, [, amount]) {
     var { replyToken } = event;
     var lineMessages = new Messages();
     axios({
@@ -65,20 +65,25 @@ lineBot.onText(/商品/, function (event, match) {
             lineBot.replyMessage(replyToken, lineMessages.commit());
         } else {
             var products = response.data.products;
-            var columns = products.map(function (product) {
-                return {
-                    thumbnailImageUrl: product.imageUrl,
-                    title: `特價商品:${product.name}`,
-                    text: `價格:${product.price}`,
-                    actions: [{
-                        "type": "postback",
-                        "label": "購買",
-                        "data":`{"productId":${product._id}}`
-                    }]
-                };
-            });
-            lineMessages.addSticker({ packageId: 1, stickerId: 402 });
-            lineMessages.addCarousel({ altText: 'iStore商品列表', columns: columns });
+            if(products.length > 0){
+                var columns = products.map(function (product) {
+                    return {
+                        thumbnailImageUrl: product.imageUrl,
+                        title: `特價商品:${product.name}`,
+                        text: `價格:${product.price}`,
+                        actions: [{
+                            "type": "postback",
+                            "label": "購買",
+                            "data":`{"productId":${product._id}}`
+                        }]
+                    };
+                });
+                lineMessages.addSticker({ packageId: 1, stickerId: 402 });
+                lineMessages.addCarousel({ altText: 'iStore商品列表', columns: columns });               
+            }else{
+                lineMessages.addSticker({ packageId: 1, stickerId: 121 });
+                lineMessages.addText(`目前無商品`);
+            }
             lineBot.replyMessage(replyToken, lineMessages.commit());
         }
     }).catch(function (err) {
