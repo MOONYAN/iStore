@@ -3,6 +3,7 @@ var { storeId, storeSecret, storeTopic } = require('../config/storeConfig').stor
     express = require('express'),
     router = express.Router(),
     async = require('async'),
+    axios = require('axios'),
     Account = require('../models/accountModel'),
     Message = require('../models/messageModel'),
     Transaction = require('../models/transactionModel'),
@@ -169,7 +170,7 @@ router.put('/buy', user.can('buy'), function (req, res) {
     }]);
 });
 
-router.delete('/:storeId/:accountId', user.can('closeAccount'), function (req, res) {
+router.delete('/:accountId', user.can('closeAccount'), function (req, res) {
     async.waterfall([function (next) {
         Transaction.remove({ account: req.params.accountId }, function (err, transaction) {
             if (err)
