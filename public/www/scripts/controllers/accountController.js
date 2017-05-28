@@ -8,12 +8,16 @@ angular.module('2017Web').controller('AccountController', ['$location', 'Account
     init();
 
     self.register = function () {
-        AccountService.register(self.account, function (data) {
-            if (data.error)
-                AlertService.alertPopup('錯誤！', data.error);
-            else
-                AlertService.alertPopup('註冊成功！', '歡迎使用 LINE@iStore');
-        });
+        if(self.account.accountId){
+            AlertService.alertPopup('錯誤！', '已註冊');            
+        }else{
+            AccountService.register(self.account, function (data) {
+                if (data.error)
+                    AlertService.alertPopup('錯誤！', data.error);
+                else
+                    AlertService.alertPopup('註冊成功！', '歡迎使用 LINE@iStore');
+            });            
+        }
     };
 
     self.login = function () {

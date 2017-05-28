@@ -1,4 +1,4 @@
-﻿angular.module('2017Web').controller('UserController', ['$location', 'UserService', 'AlertService', '$state', function ($location, UserService, AlertService, $state) {
+﻿angular.module('2017Web').controller('UserController', ['$location', '$rootScope', 'UserService', 'AlertService', '$state', function ($location, $rootScope, UserService, AlertService, $state) {
     self = this;
 
     var init = function () {
@@ -36,12 +36,17 @@
             UserService.login(self.user, function (data) {
                 if (data.error)
                     AlertService.alertPopup('錯誤！', data.error);
-                else {
-                    $state.go('account',{ account: {
+                else {                    
+                    var accounts = data.loginUser.accounts.filter(function(account){
+                        return account.storeId === $rootScope.storeId
+                    });
+                    var account = {
                         userId: data.loginUser._id,
                         username: data.loginUser.username,
-                        lineId: self.lineId
-                    }});
+                        lineId: self.lineId,
+                        accountId: accounts.length > 0 ? accounts[0].accountId : null
+                    }
+                    $state.go('account',{ account: account});                    
                 }
             });
         }
