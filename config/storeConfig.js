@@ -1,4 +1,7 @@
 var storeId = '24';
+//var domain = 'https://ilab.csie.io';
+
+var domain = 'http://192.168.50.86:3024';
 
 module.exports = {
     istore: {
@@ -23,10 +26,10 @@ module.exports = {
     },
 
     url: {
-        lineIconUrl: `https://ilab.csie.io/apps${storeId}/istore/public/picture/2017Apps_icon.png`,
-        lineUserUrl: `https://ilab.csie.io/apps${storeId}/istore/public/www/index.html#/user`,
-        lineDepositUrl: `https://ilab.csie.io/apps${storeId}/istore/account/deposit`,
-        lineBuyUrl: `https://ilab.csie.io/apps${storeId}/istore/account/buy`,
-        lineProdutsUrl: `https://ilab.csie.io/apps${storeId}/istore/product`
+        lineIconUrl: `${domain}/apps${storeId}/istore/public/picture/2017Apps_icon.png`,
+        lineUserUrl: `${domain}/apps${storeId}/istore/public/www/index.html#/user`,
+        lineDepositUrl: `${domain}/apps${storeId}/istore/account/deposit`,
+        lineBuyUrl: `${domain}/apps${storeId}/istore/account/buy`,
+        lineProdutsUrl: `${domain}/apps${storeId}/istore/product`
     }
 };
