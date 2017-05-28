@@ -95,19 +95,10 @@ router.put('/role', user.can('roleChange'), function (req, res) {
 
 router.put('/deposit', user.can('deposit'), function (req, res) {
     async.waterfall([function (next) {
-        if (req.body.lineId)
-            User.findOne({ lineId: req.body.lineId, accounts: { $elemMatch: { storeId: storeId } } }, function (err, user) {
-                if (err)
-                    return res.json({ error: '帳號錯誤' });
-                else
-                    next(null, user.accounts[0].accountId);
-            });
-        else
-            next(null, req.body.accountId);
-    }, function (accountId, next) {
-        Account.findById(accountId, function (err, account) {
+        var condition = req.body.accountId ? {_id: req.body.accountId} : {lineId:req.body.lineId};
+        Account.findOne(condition, function (err, account) {
             if (err)
-                return res.json({ error: '帳戶錯誤' });
+                return res.json({ error: '帳號錯誤' });
             else
                 next(null, account);
         });
@@ -137,17 +128,8 @@ router.put('/deposit', user.can('deposit'), function (req, res) {
 
 router.put('/buy', user.can('buy'), function (req, res) {
     async.waterfall([function (next) {
-        if (req.body.lineId)
-            User.findOne({ lineId: req.body.lineId, accounts: { $elemMatch: { storeId: storeId } } }, function (err, user) {
-                if (err)
-                    return res.json({ error: '帳號錯誤' });
-                else
-                    next(null, user.accounts[0].accountId);
-            });
-        else
-            next(null, req.body.accountId);
-    }, function (accountId, next) {
-        Account.findById(accountId, function (err, account) {
+        var condition = req.body.accountId ? {_id: req.body.accountId} : {lineId:req.body.lineId};
+        Account.findOne(condition, function (err, account) {
             if (err)
                 return res.json({ error: '帳戶錯誤' });
             else
