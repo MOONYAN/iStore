@@ -1,4 +1,4 @@
-angular.module('2017Web').controller('AccountController', ['$location', 'AccountService', 'AlertService', '$state', function ($location, AccountService, AlertService, $state) {
+angular.module('2017Web').controller('AccountController', ['$location', '$window', 'AccountService', 'AlertService', '$state', function ($location, $window, AccountService, AlertService, $state) {
     self = this;
 
     var init = function () {
@@ -30,6 +30,7 @@ angular.module('2017Web').controller('AccountController', ['$location', 'Account
     };
 
     self.logout = function () {
-        $state.go('user');
+        //$state.go('user');
+        $window.close();
     }
 }]);
