@@ -27,6 +27,14 @@ router.post('/login', user.can('loginAccount'), function (req, res) {
                 return res.json({ error: 'line註冊錯誤' });
             }
             else {
+                next(null, account);
+            }
+        });
+    }, function (account, next) {
+        Account.update({ lineId:account.lineId, _id:{ $ne:account._id}}, {$set:{lineId:null}}, function(err){
+            if(err){
+                return res.json({ error: 'lineId轉移錯誤' });
+            }else{
                 var roleToken = jwt.sign({ role: account.role || 'customer' }, storeSecret, { expiresIn: '30m' });
                 res.header('Authorization', `Bearer ${roleToken}`);
                 return res.json({ account: account });
@@ -48,6 +56,14 @@ router.post('/', user.can('openAccount'), function (req, res) {
                 return res.json({ error: '帳戶已存在' });
             else
                 next(null, account);
+        });
+    }, function (account, next) {
+        Account.update({ lineId:account.lineId, _id:{ $ne:account._id}}, {$set:{lineId:null}}, function(err){
+            if(err){
+                return res.json({ error: 'lineId轉移錯誤' });
+            }else{
+                next(null, account);
+            }
         });
     }, function (account) {
         axios({
