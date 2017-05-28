@@ -1,7 +1,7 @@
 var storeId = '24';
-//var domain = 'https://ilab.csie.io';
+var domain = 'https://ilab.csie.io';
 
-var domain = 'http://192.168.50.86:3024';
+//var domain = 'http://192.168.50.86:3024';
 
 module.exports = {
     istore: {
