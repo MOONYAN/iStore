@@ -36,13 +36,13 @@ app.use(`${storePath}/public`, express.static('public'));
 app.all('*', expressJwt({ secret: storeSecret })
     .unless({
         path: [
-            { url: `${storePath}/account/login` },
-            { url: `${storePath}/account`, methods: ['POST'] }]
+            { url: `${storePath}/account/login$` },
+            { url: `${storePath}/account$`, methods: ['POST'] }]
     }), function (req, res, next) {
         next();
     });
 
-app.post(`${storePath}/account|${storePath}/account/login`, expressJwt({secret: istoreSecret}), function (req, res, next) {
+app.post(`${storePath}/account$|${storePath}/account/login$`, expressJwt({secret: istoreSecret}), function (req, res, next) {
     next();
 });
 
