@@ -15,7 +15,7 @@ module.exports = {
         storeName: `Store ${storeId}`,
         storeDB: `mongodb://Apps${storeId}:a1234@ilab.csie.io:27017/Apps${storeId}`,
         storeSecret: `store${storeId}`,
-        storePath: `/apps${storeId}/istore`,
+        storePath: `/apps${storeId}/store`,
         storeTopic: `/topics/store${storeId}`
     },
 
@@ -26,10 +26,10 @@ module.exports = {
     },
 
     url: {
-        lineIconUrl: `${domain}/apps${storeId}/istore/public/picture/2017Apps_icon.png`,
-        lineUserUrl: `${domain}/apps${storeId}/istore/public/www/index.html#/user`,
-        lineDepositUrl: `${domain}/apps${storeId}/istore/account/deposit`,
-        lineBuyUrl: `${domain}/apps${storeId}/istore/account/buy`,
-        lineProdutsUrl: `${domain}/apps${storeId}/istore/product`
+        lineIconUrl: `${domain}/apps${storeId}/store/public/picture/2017Apps_icon.png`,
+        lineUserUrl: `${domain}/apps${storeId}/store/public/www/index.html#/user`,
+        lineDepositUrl: `${domain}/apps${storeId}/store/account/deposit`,
+        lineBuyUrl: `${domain}/apps${storeId}/store/account/buy`,
+        lineProdutsUrl: `${domain}/apps${storeId}/store/product`
     }
 };

@@ -2,6 +2,6 @@
     $rootScope.storeId = '24';
     var domain = 'https://ilab.csie.io';
     //var domain = 'http://192.168.50.86:3024';
-    $rootScope.url = domain + '/apps' + $rootScope.storeId + '/istore';
+    $rootScope.url = domain + '/apps' + $rootScope.storeId + '/store';
     $rootScope.istoreUrl = 'https://ilab.csie.io/apps09/istore';
 }]);
