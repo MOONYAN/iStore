@@ -140,7 +140,7 @@ router.put('/buy', user.can('buy'), function (req, res) {
             if (err)
                 return res.json({ error: '商品錯誤' });
             else if (account.balance < product.price)
-                return res.json({ error: '餘額不足' });
+                return res.json({ error: `餘額不足，僅餘${account.balance}元` });
             else
                 next(null, account, product);
         });
