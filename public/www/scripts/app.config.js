@@ -3,12 +3,14 @@
     $stateProvider
         .state('user', {
             url: '/user',
+            cache: false,
             templateUrl: 'views/user.html',
             controller: 'UserController',
             controllerAs: 'userCtrl'
         })
         .state('account', {
             url: '/account',
+            cache: false,
             templateUrl: 'views/account.html',
             controller: 'AccountController',
             controllerAs: 'accountCtrl',

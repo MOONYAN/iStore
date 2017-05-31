@@ -6,7 +6,7 @@
             username: '',
             password: ''
         };
-        self.lineId = $location.search().lineId || self.lineId;
+        $rootScope.lineId = $location.search().lineId || $rootScope.lineId;
     };
 
     init();
@@ -43,7 +43,7 @@
                     var account = {
                         userId: data.loginUser._id,
                         username: data.loginUser.username,
-                        lineId: self.lineId,
+                        lineId: $rootScope.lineId,
                         accountId: accounts.length > 0 ? accounts[0].accountId : null
                     }
                     $state.go('account',{ account: account});                    

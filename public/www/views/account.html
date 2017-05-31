@@ -12,12 +12,12 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="button button-block button-dark" ng-click="accountCtrl.login()">
+                <button class="button button-block button-dark" ng-click="accountCtrl.login()" ng-disabled="accountCtrl.isLogin">
                         Store24 進入
                 </button>
             </div>
             <div class="col">
-                <button class="button button-block button-dark" ng-click="accountCtrl.register()">
+                <button class="button button-block button-dark" ng-click="accountCtrl.register()" ng-disabled="accountCtrl.account.accountId">
                         Store24 開戶
                 </button>
             </div>
