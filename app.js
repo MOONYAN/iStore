@@ -37,7 +37,7 @@ app.all('*', expressJwt({ secret: storeSecret })
     .unless({
         path: [
             { url: `${storePath}/account/login` },
-            { url: `${storePath}/account$`, methods: ['POST'] }]
+            { url: `${storePath}/account`, methods: ['POST'] }]
     }), function (req, res, next) {
         next();
     });
