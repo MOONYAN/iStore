@@ -1,4 +1,5 @@
 var { storeDB, storeSecret, storePath } = require('./config/storeConfig').store,
+    { istoreSecret } = require('./config/storeConfig').istore,
     express = require('express'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
@@ -11,10 +12,7 @@ var mongoose = require('mongoose'),
 mongoose.Promise = global.Promise;
 autoIncrement.initialize(connection);
 
-var passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    User = require('./models/userModel'),
-    expressJwt = require('express-jwt'),
+var expressJwt = require('express-jwt'),
     user = require('./helpers/accessControl');
 
 var userRouter = require('./routers/userRouter'),
@@ -31,8 +29,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({ exposedHeaders: 'Authorization' }));
 
-app.use(passport.initialize());
-passport.use(new LocalStrategy(User.authenticate()));
 app.use(user.middleware());
 
 app.use(`${storePath}/public`, express.static('public'));
@@ -40,13 +36,16 @@ app.use(`${storePath}/public`, express.static('public'));
 app.all('*', expressJwt({ secret: storeSecret })
     .unless({
         path: [
-            { url: `${storePath}/user/login` },
-            { url: `${storePath}/user`, methods: ['POST'] }]
+            { url: `${storePath}/account/login` },
+            { url: `${storePath}/account`, methods: ['POST'] }]
     }), function (req, res, next) {
         next();
     });
 
-app.use(`${storePath}/user`, userRouter);
+app.post(`${storePath}/account$|${storePath}/account/login`, expressJwt({secret: istoreSecret}), function (req, res, next) {
+    next();
+});
+
 app.use(`${storePath}/account`, accountRouter);
 app.use(`${storePath}/product`, productRouter);
 app.use(`${storePath}/line`, linePushRouter);

@@ -3,7 +3,6 @@ var { storeSecret } = require('../config/storeConfig').store,
     router = express.Router(),
     async = require('async'),
     axios = require('axios'),
-    User = require('../models/userModel'),
     Account = require('../models/accountModel'),
     Product = require('../models/productModel');
 
@@ -17,14 +16,14 @@ var Messages = LineBot.Messages;
 
 router.post('/product', user.can('linePushProducts'), function (req, res) {
     async.waterfall([function (next) {
-        User.find({}).select('lineId').exec(function (err, users) {
+        Account.find({}).select('lineId').exec(function (err, accounts) {
             if (err)
                 return res.json({ error: '帳號錯誤' });
             else {
                 var lineIds = [];
-                users.filter(function (user) {
-                    if (user.lineId !== undefined && user.lineId !== null) {
-                        lineIds.push(user.lineId);
+                accounts.filter(function (account) {
+                    if (account.lineId !== undefined && account.lineId !== null) {
+                        lineIds.push(account.lineId);
                     }
                 });
                 next(null, lineIds);
@@ -58,8 +57,6 @@ router.post('/product', user.can('linePushProducts'), function (req, res) {
     }, function (lineIds, pushMessages) {
         lineBot.multicast(lineIds, pushMessages.commit())
             .then(function () {
-                var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                res.header('Authorization', `Bearer ${roleToken}`);
                 return res.json({});
             }).catch(function (err) {
                 console.log(err);
@@ -70,14 +67,14 @@ router.post('/product', user.can('linePushProducts'), function (req, res) {
 
 router.post('/location', user.can('linePushLocation'), function (req, res) {
     async.waterfall([function (next) {
-        User.find({}).select('lineId').exec(function (err, users) {
+        Account.find({}).select('lineId').exec(function (err, accounts) {
             if (err)
                 return res.json({ error: '帳號錯誤' });
             else {
                 var lineIds = [];
-                users.filter(function (user) {
-                    if (user.lineId !== undefined && user.lineId !== null) {
-                        lineIds.push(user.lineId);
+                accounts.filter(function (account) {
+                    if (account.lineId !== undefined && account.lineId !== null) {
+                        lineIds.push(account.lineId);
                     }
                 });
                 next(null, lineIds);
@@ -94,8 +91,6 @@ router.post('/location', user.can('linePushLocation'), function (req, res) {
                 })
                 lineBot.multicast(lineIds, pushMessages.commit())
                     .then(function () {
-                        var roleToken = jwt.sign({ role: req.user.role }, storeSecret, { expiresIn: '30m' });
-                        res.header('Authorization', `Bearer ${roleToken}`);
                         return res.json({});
                     }).catch(function () {
                         res.json({ error: '推播錯誤' });

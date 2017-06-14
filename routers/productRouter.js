@@ -2,7 +2,6 @@ var { storeSecret } = require('../config/storeConfig').store,
     express = require('express'),
     router = express.Router(),
     async = require('async'),
-    User = require('../models/userModel'),
     Account = require('../models/accountModel'),
     Product = require('../models/productModel');
 

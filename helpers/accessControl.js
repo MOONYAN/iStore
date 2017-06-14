@@ -6,6 +6,12 @@ var user = new ConnectRoles({
     }
 });
 
+user.use('loginAccount', function (req) {
+    if (req.user && (req.user.role === 'customer' || req.user.role === 'line')) {
+        return true;
+    }
+});
+
 user.use('roleChange', function (req) {
     if (req.user && (req.user.role === 'manager' || req.user.role === 'customer')) {
         return true;
@@ -13,10 +19,11 @@ user.use('roleChange', function (req) {
 });
 
 user.use('openAccount', function (req) {
-    if (req.user && req.user.role === 'customer') {
+    if (req.user && req.user.role === 'customer' || req.user.role === 'line') {
         return true;
     }
 });
+
 user.use('closeAccount', function (req) {
     if (req.user && req.user.role === 'customer') {
         return true;
